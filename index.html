@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kunakao</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="chocolate-icon.png" type="image/png">
+    <script type="importmap">
+      {
+        "imports": {
+          "canvas-confetti": "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.module.mjs",
+          "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
+          "firebase/auth": "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js",
+          "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js",
+          "@websim/websim-socket": "https://esm.websim.com/@websim/websim-socket"
+        }
+      }
+    </script>
+</head>
+<body>
+    <div id="auth-container">
+        <div id="auth-box">
+            <img src="1.svg" alt="Kunakao logo" style="width: 120px; height: auto; margin-bottom: 1rem;">
+            <p>Inicia sesión o regístrate para guardar tus pedidos en la nube.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <div style="display:flex; gap:.5rem; align-items:center;">
+                      <input type="password" id="password" required autocomplete="current-password" style="flex:1;">
+                      <label style="display:flex; align-items:center; gap:.25rem; font-size:.85rem; user-select:none;">
+                        <input type="checkbox" id="toggle-password"> Ver
+                      </label>
+                    </div>
+                </div>
+                <div id="auth-buttons">
+                    <button type="submit" id="login-btn">Iniciar Sesión</button>
+                    <button type="button" id="signup-btn">Registrarse</button>
+                </div>
+                <div class="form-group" style="margin-top:.5rem; text-align:center;">
+                  <button type="button" id="reset-password-btn" style="background:none; border:none; color:#8D6E63; cursor:pointer; text-decoration:underline; font-weight:700;">¿Olvidaste tu contraseña?</button>
+                </div>
+                <div class="form-group" style="margin-top:1.5rem; text-align:center;">
+                    <button type="button" id="google-signin-btn" class="social-signin-btn">
+                        <img src="https://img.icons8.com/color/18/000000/google-logo.png" alt="Google icon" style="vertical-align:middle; margin-right: 8px;">
+                        Iniciar con Google
+                    </button>
+                </div>
+                <p id="auth-error" class="error-message"></p>
+                <p id="auth-hint" style="font-size:.85rem; color:#8D6E63; text-align:center;"></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="app" style="display: none;">
+        <header>
+            <img src="Recurso 4.svg" alt="Kunakao logo" class="icon" style="width: 320px; height: auto; margin: 0 auto 1rem; display: block;">
+            <div id="header-info">
+                 <p>Anota tus pedidos y lleva la cuenta de lo que te deben.</p>
+                 <div id="user-info">
+                    <span id="user-email"></span>
+                    <button id="logout-btn">Cerrar Sesión</button>
+                </div>
+            </div>
+        </header>
+
+        <section id="add-order">
+            <h2>Añadir Nuevo Pedido</h2>
+            <form id="order-form">
+                <div class="form-group">
+                    <label for="prompt">Cliente y Cantidad (Ej: Ana 2):</label>
+                    <input type="text" id="prompt" placeholder="Nombre y cantidad..." required>
+                </div>
+                 <div id="product-list">
+                    <!-- Product list will be injected by JS -->
+                </div>
+                <button type="submit">Añadir / Actualizar Pedido</button>
+            </form>
+             <p id="error-message" class="error-message"></p>
+        </section>
+
+        <section id="orders-list">
+            <h2>Lista de Pedidos</h2>
+            <div class="form-group">
+                <input type="text" id="search-input" placeholder="Buscar cliente...">
+            </div>
+            <div id="sort-controls">
+                <label>Ordenar por:</label>
+                <button type="button" class="sort-btn" data-sort-criteria="name">
+                    Cliente
+                </button>
+                <button type="button" class="sort-btn" data-sort-criteria="date">
+                    Fecha
+                </button>
+                <button type="button" class="sort-btn" data-sort-criteria="debt">
+                    Deuda
+                </button>
+            </div>
+            <div id="orders-container">
+                <!-- Los pedidos se insertarán aquí -->
+            </div>
+        </section>
+    </div>
+    <script src="app.js" type="module"></script>
+</body>
+</html>
